@@ -13,7 +13,7 @@ Phạm vi local foundation theo [plan](../superpowers/plans/2026-11-08-foundatio
 | Web | Next.js 16.4.6, React/ReactDOM 19.3.1; TypeScript strict, ESLint 10.14.0, Prettier 3.6.2 |
 | Database local | PostgreSQL 17.8, vector 0.8.1, pg_trgm 1.6; image tag + immutable digest trong Compose |
 | Docker | Client/server 29.1.3; project riêng `agu-foundation`, loopback port 55432, volume `agu-foundation_agu_db` |
-| CI | Ubuntu jobs backend/web/secrets; action SHAs pin theo upstream tags; dependency installs locked |
+| CI | Ubuntu 24.04 jobs backend/web/secrets; action SHAs pin theo upstream tags; dependency installs locked |
 
 Next yêu cầu Node tối thiểu 20.9 theo [official installation](https://nextjs.org/docs/app/getting-started/installation); workspace chọn Node 22 đang có và đã chạy build. Root uv workspace theo [official workspaces](https://docs.astral.sh/uv/concepts/projects/workspaces/). pgvector image theo [upstream Docker guidance](https://github.com/pgvector/pgvector#docker). Chưa kiểm tra Docling/OCR trên Python 3.13: parser spike phải xác minh compatibility/weights/license trước khi thêm dependency, không suy ra từ foundation pass.
 

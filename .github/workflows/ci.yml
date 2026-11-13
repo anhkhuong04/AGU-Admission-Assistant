@@ -9,7 +9,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   backend:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     services:
       db:
         image: pgvector/pgvector:0.8.1-pg17@sha256:3e8b3adfd27b5707128f60956f62a793c3c9326ea8cfaf0eab7adccb5d700b21
@@ -47,7 +47,7 @@ jobs:
       - run: python -B -m unittest discover -s .agents/skills/agu-sync-design/scripts -p 'test_*.py'
       - run: python -B -m unittest discover -s .agents/skills/agu-evaluate-rag/scripts -p 'test_*.py'
   web:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     env:
       NEXT_TELEMETRY_DISABLED: "1"
     steps:
@@ -71,7 +71,7 @@ jobs:
       - run: uv sync --locked
       - run: uv run --locked python scripts/smoke_foundation.py
   secrets:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
       - name: Scan tracked files for credentials
