@@ -1,0 +1,19 @@
+name: agu-foundation
+services:
+  db:
+    image: pgvector/pgvector:0.8.1-pg17@sha256:3e8b3adfd27b5707128f60956f62a793c3c9326ea8cfaf0eab7adccb5d700b21
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-agu_local}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-agu_local_only}
+      POSTGRES_DB: ${POSTGRES_DB:-agu_foundation_test}
+    ports:
+      - "127.0.0.1:${AGU_DB_PORT:-55432}:5432"
+    volumes:
+      - agu_db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+volumes:
+  agu_db:

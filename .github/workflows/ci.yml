@@ -1,0 +1,78 @@
+name: Foundation CI
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: foundation-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    services:
+      db:
+        image: pgvector/pgvector:0.8.1-pg17@sha256:3e8b3adfd27b5707128f60956f62a793c3c9326ea8cfaf0eab7adccb5d700b21
+        env:
+          POSTGRES_USER: agu_local
+          POSTGRES_PASSWORD: agu_local_only
+          POSTGRES_DB: agu_foundation_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U agu_local -d agu_foundation_test"
+          --health-interval 2s --health-timeout 5s --health-retries 30
+    env:
+      DATABASE_URL: postgresql+psycopg://agu_local:agu_local_only@127.0.0.1:5432/agu_foundation_test
+      TEST_DATABASE_URL: postgresql+psycopg://agu_local:agu_local_only@127.0.0.1:5432/agu_foundation_test
+      UV_LINK_MODE: copy
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version-file: .python-version
+      - uses: astral-sh/setup-uv@94527f2e458b27549849d47d273a16bec83a01e9 # v7
+        with:
+          version: "0.12.21"
+      - run: uv sync --locked
+      - run: uv run --locked ruff check .
+      - run: uv run --locked ruff format --check packages/backend services/api infra tests scripts
+      - run: uv run --locked mypy packages/backend/src services/api/src
+      - run: uv run --locked alembic -c infra/migrations/alembic.ini upgrade head
+      - run: uv run --locked alembic -c infra/migrations/alembic.ini upgrade head
+      - run: uv run --locked alembic -c infra/migrations/alembic.ini check
+      - run: uv run --locked pytest -q
+      - run: uv run --locked pip-audit --local --skip-editable
+      - run: python -B .agents/skills/agu-sync-design/scripts/check_design.py --root .
+      - run: python -B -m unittest discover -s .agents/skills/agu-sync-design/scripts -p 'test_*.py'
+      - run: python -B -m unittest discover -s .agents/skills/agu-evaluate-rag/scripts -p 'test_*.py'
+  web:
+    runs-on: ubuntu-latest
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .node-version
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run format:check
+      - run: npm run build
+      - run: npm audit --audit-level=high
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version-file: .python-version
+      - uses: astral-sh/setup-uv@94527f2e458b27549849d47d273a16bec83a01e9 # v7
+        with:
+          version: "0.12.21"
+      - run: uv sync --locked
+      - run: uv run --locked python scripts/smoke_foundation.py
+  secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - name: Scan tracked files for credentials
+        run: docker run --rm -v "$PWD:/repo" ghcr.io/gitleaks/gitleaks:v8.30.0@sha256:691af3c7c5a48b16f187ce3446d5f194838f91238f27270ed36eef6359a574d9 dir /repo --redact --no-banner

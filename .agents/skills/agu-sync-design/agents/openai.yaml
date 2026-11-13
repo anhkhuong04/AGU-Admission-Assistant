@@ -1,0 +1,4 @@
+interface:
+  display_name: "AGU Design Sync"
+  short_description: "Sync AGU design contracts and dependencies"
+  default_prompt: "Use $agu-sync-design to synchronize this AGU design change and check its affected contracts."

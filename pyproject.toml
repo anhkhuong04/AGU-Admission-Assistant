@@ -1,0 +1,45 @@
+[project]
+name = "agu-foundation"
+version = "0.1.0"
+requires-python = ">=3.13,<3.14"
+dependencies = ["agu-api", "agu-backend"]
+
+[dependency-groups]
+dev = [
+  "pytest>=8,<10",
+  "ruff>=0.14,<1",
+  "mypy>=1.18,<2",
+  "alembic>=1.17,<2",
+  "psycopg[binary]>=3.2,<4",
+  "sqlalchemy>=2.0,<2.1",
+  "httpx2>=2.16.0",
+  "pip-audit>=2.9,<3",
+]
+
+[tool.uv]
+package = false
+
+[tool.uv.workspace]
+members = ["packages/backend", "services/api"]
+
+[tool.uv.sources]
+agu-api = { workspace = true }
+agu-backend = { workspace = true }
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+src = ["packages/backend/src", "services/api/src"]
+include = ["packages/backend/**/*.py", "services/api/**/*.py", "infra/**/*.py", "tests/**/*.py", "scripts/**/*.py"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+plugins = ["pydantic.mypy"]

@@ -1,0 +1,14 @@
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Generated dependencies and local verification artifacts"
+paths = [
+  '''(^|/)node_modules/''',
+  '''(^|/)\.venv/''',
+  '''(^|/)\.next/''',
+  '''(^|/)\.local/''',
+  '''(^|/)\.git/''',
+  '''(^|/)\.mypy_cache/''',
+  '''(^|/)__pycache__/''',
+]

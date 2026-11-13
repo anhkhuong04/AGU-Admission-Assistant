@@ -1,0 +1,18 @@
+{
+  "synthetic": true,
+  "raw_version_id": "00000000-0000-4000-8000-000000000001",
+  "academic_year": null,
+  "program_scope": "unknown",
+  "program_ids": [],
+  "review_state": "draft",
+  "quality_warnings": ["ocr_table_warning"],
+  "facts": [
+    {
+      "key": "fixture-scheduled-date",
+      "value": "2026-12-01",
+      "value_type": "date",
+      "source_locator": "synthetic/page-1/table-1/row-2",
+      "date_precision": "date"
+    }
+  ]
+}

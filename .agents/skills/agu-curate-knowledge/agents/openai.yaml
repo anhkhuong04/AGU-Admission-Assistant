@@ -1,0 +1,4 @@
+interface:
+  display_name: "AGU Knowledge Curation"
+  short_description: "Prepare AGU source and fact review handoffs"
+  default_prompt: "Use $agu-curate-knowledge to prepare a reviewable AGU source, fact and applicability handoff."

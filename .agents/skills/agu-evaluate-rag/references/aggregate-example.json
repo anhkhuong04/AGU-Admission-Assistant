@@ -1,0 +1,23 @@
+{
+  "counts": {
+    "answerable_cases": 100,
+    "answer_correct_cases": 97,
+    "false_abstention_cases": 3,
+    "unanswerable_cases": 40,
+    "correct_abstention_cases": 39,
+    "material_claims": 240,
+    "correct_material_claims": 235,
+    "claims_with_supporting_citation": 236,
+    "citation_pairs": 260,
+    "supported_citation_pairs": 255,
+    "retrieval_cases": 60,
+    "all_groups_top5_cases": 53,
+    "any_group_top5_cases": 58,
+    "critical_errors": 1
+  },
+  "metadata": {
+    "synthetic": true,
+    "holdout_independent": false,
+    "knowledge_release_id": "release-fixture"
+  }
+}

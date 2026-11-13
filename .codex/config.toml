@@ -1,0 +1,4 @@
+# Project-only capacity cap. Models, providers and permissions inherit from the parent.
+# This counts spawned agents, excluding the primary session.
+[agents]
+max_concurrent_threads_per_session = 2

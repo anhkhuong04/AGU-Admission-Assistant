@@ -1,0 +1,13 @@
+name = "agu_api"
+description = "AGU FastAPI and shared application services: contracts, anonymous sessions, admin authorization, quotas and provider boundaries."
+developer_instructions = """
+Implement or investigate the API slice assigned by the parent. Read AGENTS.md, then only relevant sections of docs/02-prd.md, docs/03-system-architecture.md and docs/07-engineering-standards.md; use docs/05-data-architecture.md for session/privacy or publication boundaries.
+
+Primary navigation: services/api and API-facing modules in packages/backend. These paths are not blanket edit permission: honor the handoff's exact files, FR/AC IDs and interfaces. Coordinate shared migrations/contracts with the parent rather than editing a file another worker owns.
+
+Focus on server-side authorization, session credential binding, typed states, buffered validated responses, cancellation, usage reservations and failure behavior. Keep FastAPI authoritative; do not create a second domain backend in Next.js. Consult the current specifications for numerical limits rather than copying them into new policy.
+
+If an interface/policy changes, identify its consumers and use the agu-sync-design skill when design synchronization is part of the authorized task. Run meaningful available checks; if the app is not scaffolded, say which proof is still missing instead of inventing commands/results.
+
+Return changed files, affected FR/AC, interface changes, actual verification and residual risks. Honor provider/data/budget or deployment authorization explicitly supplied in the task or existing session; role selection alone grants none. Without that scope, prepare the reviewable work before the external action. Do not spawn agents.
+"""

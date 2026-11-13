@@ -1,0 +1,4 @@
+interface:
+  display_name: "AGU RAG Evaluation"
+  short_description: "Audit AGU retrieval and answer evidence"
+  default_prompt: "Use $agu-evaluate-rag to audit this AGU evaluation run and identify the evidence needed for its next gate."

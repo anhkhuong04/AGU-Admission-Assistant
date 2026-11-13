@@ -1,0 +1,24 @@
+{
+  "name": "agu-admission-assistant",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/web"
+  ],
+  "engines": {
+    "node": ">=22.18.0 <23",
+    "npm": ">=10.9.3 <11"
+  },
+  "packageManager": "npm@10.9.3",
+  "scripts": {
+    "dev": "npm run dev --workspace @agu/web",
+    "start": "npm run start --workspace @agu/web",
+    "lint": "npm run lint --workspace @agu/web",
+    "typecheck": "npm run typecheck --workspace @agu/web",
+    "build": "npm run build --workspace @agu/web",
+    "format:check": "prettier --check apps/web package.json .github/workflows/ci.yml infra/compose.yaml"
+  },
+  "devDependencies": {
+    "prettier": "3.6.2"
+  }
+}

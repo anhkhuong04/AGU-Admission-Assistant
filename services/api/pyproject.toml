@@ -1,0 +1,12 @@
+[project]
+name = "agu-api"
+version = "0.1.0"
+requires-python = ">=3.13,<3.14"
+dependencies = ["agu-backend", "fastapi>=0.120,<1", "uvicorn>=0.38,<1"]
+
+[tool.uv.sources]
+agu-backend = { workspace = true }
+
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
